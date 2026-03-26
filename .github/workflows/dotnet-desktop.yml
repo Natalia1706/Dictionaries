@@ -67,8 +67,16 @@ jobs:
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+  
+# Install dotnet format tool
+    - name: Install dotnet-format
+      run: dotnet tool install -g dotnet-format
+    
+    # Check formatting (will fail if formatting issues found)
+    - name: Check code formatting
+      run: dotnet format --verify-no-changes --verbosity diagnostic
 
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
 
 
